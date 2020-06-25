@@ -70,7 +70,7 @@ public class ExpandableTextView extends AppCompatTextView
         attributes.recycle();
 
         // keep the original value of maxLines
-        this.maxLines = this.getMaxLines();
+        this.maxLines = super.getMaxLines();
 
         // create bucket of OnExpandListener instances
         this.onExpandListeners = new ArrayList<>();
