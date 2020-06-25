@@ -44,7 +44,7 @@ public class ExpandableTextView extends AppCompatTextView
     private TimeInterpolator expandInterpolator;
     private TimeInterpolator collapseInterpolator;
 
-    private final int maxLines;
+    private int maxLines;
     private long animationDuration;
     private boolean animating;
     private boolean expanded;
@@ -130,7 +130,7 @@ public class ExpandableTextView extends AppCompatTextView
             this.animating = true;
 
             // set maxLines to MAX Integer, so we can calculate the expanded height
-            this.setMaxLines(Integer.MAX_VALUE);
+            super.setMaxLines(Integer.MAX_VALUE);
 
             // measure expanded height
             this.measure
@@ -227,7 +227,7 @@ public class ExpandableTextView extends AppCompatTextView
                     ExpandableTextView.this.animating = false;
 
                     // set maxLines back to original value
-                    ExpandableTextView.this.setMaxLines(ExpandableTextView.this.maxLines);
+                    ExpandableTextView.super.setMaxLines(ExpandableTextView.this.maxLines);
 
                     // if fully collapsed, set height back to WRAP_CONTENT, because when rotating the device
                     // the height previously calculated with this ValueAnimator isn't correct anymore
@@ -326,6 +326,17 @@ public class ExpandableTextView extends AppCompatTextView
     public TimeInterpolator getCollapseInterpolator()
     {
         return this.collapseInterpolator;
+    }
+
+    @Override
+    public void setMaxLines(int maxLines) {
+        this.maxLines = maxLines;
+        super.setMaxLines(maxLines);
+    }
+
+    @Override
+    public int getMaxLines() {
+        return maxLines;
     }
 
     /**
