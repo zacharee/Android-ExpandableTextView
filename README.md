@@ -1,139 +1,43 @@
 Android-ExpandableTextView
 ==========================
-An expandable TextView for Android applications (4.1+).
+This is a forked version of Cliff's ExpandableTextView library, which adds support for using the `setMaxLines()` method.
 
-[ ![Download](https://api.bintray.com/packages/blogcat/maven/android-expandabletextview/images/download.svg) ](https://bintray.com/blogcat/maven/android-expandabletextview/_latestVersion)
+Include it in your project using Jitpack:
 
-Latest Changes
---------------
-- Added support for Android O
-- Added RecyclerView Demo
-
-Demo
-----
-This repository also contains a demo project.
-
-![Demo](https://raw.githubusercontent.com/Blogcat/Android-ExpandableTextView/master/demo.gif)
-
-Add dependency
---------------
-This library is released in Maven Central and jCenter:
-
-```groovy
+```
+allprojects {
 	repositories {
-	    mavenCentral()
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
-or
-
-```groovy
-	repositories {
-	    jcenter()
-	}
+```
+dependencies {
+	implementation 'com.github.zacharee:Android-ExpandableTextView:Tag'
+}
 ```
 
-library dependency
+Where `Tag` is the latest commit tag (https://jitpack.io/#zacharee/Android-ExpandableTextView/).
 
-```groovy
-	dependencies {
-	    compile 'at.blogc:expandabletextview:1.0.5'
-	}
+The usage is the same as the original library's. Include the ExpandableTextView in your XML:
+
+```
+<at.blogc.android.views.ExpandableTextView
+	...
+	android:maxLines="10"
+	/>
 ```
 
-Usage
------
-Using the ExpandableTextView is very easy, it's just a regular TextView with some extra functionality added to it. By defining the android:maxLines attribute, you can set the default number of lines for the TextView collapsed state. 
+And expand/collapse in code:
 
-```xml
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <at.blogc.android.views.ExpandableTextView
-        android:id="@+id/expandableTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lorem_ipsum"
-        android:maxLines="5"
-        android:ellipsize="end"
-        app:animation_duration="750"/>
-
-	<!-- Optional parameter animation_duration: sets the duration of the expand animation -->
-
-    <Button
-        android:id="@+id/button_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/expand"/>
-
-</LinearLayout>
 ```
-
-In your Activity or Fragment:
-
-```java
-final ExpandableTextView expandableTextView = (ExpandableTextView) this.findViewById(R.id.expandableTextView);
-final Button buttonToggle = (Button) this.findViewById(R.id.button_toggle);
-
-// set animation duration via code, but preferable in your layout files by using the animation_duration attribute
-expandableTextView.setAnimationDuration(750L);
-
- // set interpolators for both expanding and collapsing animations
-expandableTextView.setInterpolator(new OvershootInterpolator());
-
-// or set them separately
-expandableTextView.setExpandInterpolator(new OvershootInterpolator());
-expandableTextView.setCollapseInterpolator(new OvershootInterpolator());
-
-// toggle the ExpandableTextView
-    buttonToggle.setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(final View v)
-        {
-            buttonToggle.setText(expandableTextView.isExpanded() ? R.string.expand : R.string.collapse);
-            expandableTextView.toggle();
-        }
-    });
-
-// but, you can also do the checks yourself
-buttonToggle.setOnClickListener(new View.OnClickListener()
-{
-    @Override
-    public void onClick(final View v)
-    {
-        if (expandableTextView.isExpanded())
-        {
-            expandableTextView.collapse();
-            buttonToggle.setText(R.string.expand);
-        }
-        else
-        {
-            expandableTextView.expand();
-            buttonToggle.setText(R.string.collapse);
-        }
-    }
-});
-
-// listen for expand / collapse events
-expandableTextView.setOnExpandListener(new ExpandableTextView.OnExpandListener()
-{
-    @Override
-    public void onExpand(final ExpandableTextView view)
-    {
-        Log.d(TAG, "ExpandableTextView expanded");
-    }
-
-    @Override
-    public void onCollapse(final ExpandableTextView view)
-    {
-        Log.d(TAG, "ExpandableTextView collapsed");
-    }
-});
+if (expandable.isExpanded) {
+	expandable.collapse()
+else {
+	expandable.expand()
+}
 ```
 
 License
