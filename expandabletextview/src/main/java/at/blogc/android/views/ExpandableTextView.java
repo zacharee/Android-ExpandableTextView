@@ -6,8 +6,10 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -36,7 +38,7 @@ import at.blogc.expandabletextview.R;
  *
  * @author Cliff Ophalvens (Blogc.at)
  */
-public class ExpandableTextView extends TextView
+public class ExpandableTextView extends AppCompatTextView
 {
     private final List<OnExpandListener> onExpandListeners;
     private TimeInterpolator expandInterpolator;

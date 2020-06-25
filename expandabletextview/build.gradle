@@ -1,19 +1,13 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 def fullVersion = '1.0.5'
 
-group = 'at.blogc'
-version = fullVersion
-
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName fullVersion
 
@@ -27,100 +21,8 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-annotations:25.3.1'
-
-    testCompile 'junit:junit:4.12'
-}
-
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            name 'Android ExpandableTextview'
-            description 'An expandable TextView for Android.'
-            url 'https://github.com/Blogcat/Android-ExpandableTextView'
-            inceptionYear '2016'
-
-            packaging 'aar'
-            groupId 'at.blogc'
-            artifactId 'expandabletextview'
-            version fullVersion
-
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-            scm {
-                connection 'https://github.com/Blogcat/Android-ExpandableTextView.git'
-                url 'https://github.com/Blogcat/Android-ExpandableTextView'
-
-            }
-            developers {
-                developer {
-                    id 'cliffus'
-                    name 'Cliff Ophalvens'
-                    email 'cliff.ophalvens@gmail.com'
-                }
-            }
-        }
-    }
-}
-
-bintray {
-    user = "${bintray_user}"
-    key = "${bintray_apikey}"
-    configurations = ['archives']
-
-    dryRun = false
-
-    pkg {
-        repo = 'maven'
-        name = 'android-expandabletextview'
-        userOrg = "blogcat"
-        licenses = ['Apache-2.0']
-        websiteUrl = 'https://github.com/Blogcat/Android-ExpandableTextView'
-        issueTrackerUrl = 'https://github.com/Blogcat/Android-ExpandableTextView/issues'
-        vcsUrl = 'https://github.com/Blogcat/Android-ExpandableTextView.git'
-        githubRepo = 'Blogcat/Android-ExpandableTextView'
-        githubReleaseNotesFile = 'CHANGELOG.md'
-
-        version {
-            name = fullVersion
-            released  = new Date()
-            vcsTag = fullVersion
-
-            gpg {
-                sign = true
-                passphrase = "${bintray_gpg_password}"
-            }
-        }
-    }
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 }
